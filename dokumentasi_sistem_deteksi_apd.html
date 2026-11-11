@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d18">
+<meta name="description" content="Dokumentasi proyek sistem deteksi penggunaan APD menggunakan YOLOv8m, YOLOv11m, YOLOv26m, dan K-Means Clustering.">
+<title>Dokumentasi Proyek — Sistem Deteksi APD</title>
+
+<style>
+:root {
+  --bg: #080d18;
+  --panel: #101a2b;
+  --line: #233650;
+  --text: #eaf1fb;
+  --muted: #9eafc7;
+  --blue: #5ca8ff;
+  --cyan: #68e0dc;
+  --green: #43d7a0;
+  --yellow: #ffca65;
+  --red: #ff6f7d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top, #132744 0%, var(--bg) 55%);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  line-height: 1.55;
+}
+
+.wrap {
+  width: min(1180px, calc(100% - 32px));
+  margin: 32px auto 60px;
+}
+
+/* HEADER */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 30px;
+  border: 1px solid #2c4c70;
+  border-radius: 20px;
+  background: linear-gradient(120deg, #18395f, #101a2b 75%);
+  box-shadow: 0 20px 60px #0003;
+}
+
+.eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  font-weight: 800;
+}
+
+h1 {
+  font-size: clamp(26px, 4vw, 42px);
+  line-height: 1.15;
+  margin: 8px 0 12px;
+}
+
+.subtitle {
+  color: #c0d0e5;
+  max-width: 720px;
+  margin: 0;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.pill {
+  border: 1px solid #36577b;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 12px;
+  color: #dcecff;
+  background: #ffffff08;
+}
+
+.hero-icon {
+  width: 105px;
+  height: 105px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 24px;
+  background: #ffffff0a;
+  border: 1px solid #ffffff18;
+  font-size: 52px;
+}
+
+/* MAIN GRID */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.card {
+  min-width: 0;
+  background: linear-gradient(145deg, #121e30, #0d1523);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 30px #0002;
+}
+
+.card h2 {
+  font-size: 16px;
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.card h2 .ico {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: #5ca8ff18;
+  color: var(--blue);
+}
+
+.card p {
+  color: #b6c5d9;
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.description { grid-column: span 5; }
+.tech { grid-column: span 3; }
+.dataset { grid-column: span 4; }
+.workflow { grid-column: span 7; }
+.evaluation { grid-column: span 5; }
+.results { grid-column: span 7; }
+.clusters { grid-column: span 5; }
+.gallery { grid-column: span 8; }
+.notes { grid-column: span 4; }
+
+/* TECHNOLOGY */
+
+.tech-list {
+  display: grid;
+  gap: 13px;
+}
+
+.tech-item {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+}
+
+.tech-logo {
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  background: #1a2b43;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--cyan);
+  flex: none;
+}
+
+.tech-item b {
+  display: block;
+  font-size: 13px;
+}
+
+.tech-item small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* TABLE */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 9px;
+  border-bottom: 1px solid #24344a;
+}
+
+th {
+  color: #a8c7eb;
+  background: #14253b;
+  font-weight: 700;
+}
+
+td {
+  color: #d4e0ef;
+}
+
+.tag {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 11px;
+  font-weight: 800;
+  background: #1b385a;
+  color: #a9d1ff;
+}
+
+.tag.green {
+  background: #123a30;
+  color: #71efbd;
+}
+
+.tag.yellow {
+  background: #3a3019;
+  color: #ffd17b;
+}
+
+.tag.red {
+  background: #401f2a;
+  color: #ff9ba5;
+}
+
+/* WORKFLOW */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.step {
+  border: 1px solid #263d59;
+  background: #0c1625;
+  border-radius: 12px;
+  padding: 13px 11px;
+  min-height: 132px;
+}
+
+.step .num {
+  font-size: 12px;
+  color: var(--cyan);
+  font-weight: 900;
+}
+
+.step b {
+  display: block;
+  font-size: 13px;
+  margin: 4px 0;
+}
+
+.step p {
+  font-size: 12px;
+  margin: 0;
+  color: var(--muted);
+}
+
+/* METRICS */
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.metric {
+  padding: 13px;
+  border-radius: 12px;
+  background: #0b1625;
+  border: 1px solid #273a52;
+}
+
+.metric span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.metric strong {
+  font-size: 23px;
+  letter-spacing: -.5px;
+}
+
+.barrow {
+  display: grid;
+  grid-template-columns: 90px 1fr 50px;
+  gap: 9px;
+  align-items: center;
+  margin: 12px 0;
+  font-size: 12px;
+}
+
+.bar {
+  height: 9px;
+  background: #1c2a3d;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #4b8dff, #68e0dc);
+}
+
+/* CLUSTER */
+
+.cluster-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cluster {
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid #28415c;
+  background: #0c1828;
+}
+
+.cluster strong {
+  font-size: 12px;
+  color: var(--blue);
+}
+
+.cluster p {
+  margin: 6px 0 0;
+  font-size: 13px;
+}
+
+/* NOTICE */
+
+.notice {
+  padding: 13px 14px;
+  border: 1px solid #2a4b68;
+  border-radius: 12px;
+  background: #12243a;
+  color: #b8cce4;
+  font-size: 12px;
+  margin-top: 13px;
+}
+
+/* DOCUMENTATION */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.shot {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #3c5879;
+  border-radius: 13px;
+  background: #09111e;
+  padding: 12px;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: 280px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #050a12;
+}
+
+.shot-title {
+  color: #eaf1fb;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.caption,
+.video-caption {
+  color: #9eafc7;
+  font-size: 12px;
+  margin: 10px 0 0;
+}
+
+/* VIDEO PLAYER */
+
+.video-container {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 9px;
+  border: 1px solid #263d59;
+  background: #050a12;
+}
+
+.video-container video {
+  display: block;
+  width: 100%;
+  height: 280px;
+  object-fit: contain;
+  background: #050a12;
+}
+
+/* FOOTER */
+
+footer {
+  text-align: center;
+  color: #71849e;
+  font-size: 12px;
+  padding: 25px 0;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 850px) {
+  .description,
+  .tech,
+  .dataset,
+  .workflow,
+  .evaluation,
+  .results,
+  .clusters,
+  .gallery,
+  .notes {
+    grid-column: span 12;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .hero-icon {
+    width: 72px;
+    height: 72px;
+    font-size: 36px;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .wrap {
+    width: calc(100% - 20px);
+    margin-top: 10px;
+  }
+
+  .topbar {
+    padding: 20px;
+  }
+
+  .hero-icon {
+    display: none;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .steps,
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metric strong {
+    font-size: 19px;
+  }
+
+  .barrow {
+    grid-template-columns: 78px 1fr 43px;
+  }
+
+  .shot img,
+  .video-container video {
+    height: auto;
+    max-height: 350px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="wrap">
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">Project Documentation / Computer Vision</div>
+
+      <h1>Sistem Deteksi Penggunaan APD</h1>
+
+      <p class="subtitle">
+        Deteksi helm dan rompi keselamatan menggunakan YOLO,
+        pencatatan hasil deteksi, dan pengelompokan pola penggunaan APD
+        dengan K-Means.
+      </p>
+
+      <div class="pills">
+        <span class="pill">YOLOv8m</span>
+        <span class="pill">YOLOv11m</span>
+        <span class="pill">YOLOv26m</span>
+        <span class="pill">K-Means</span>
+        <span class="pill">CRISP-DM</span>
+      </div>
+    </div>
+
+    <div class="hero-icon" aria-hidden="true">🦺</div>
+  </header>
+
+  <section class="grid">
+
+    <!-- DESKRIPSI -->
+    <article class="card description">
+      <h2><span class="ico">▤</span> Deskripsi Proyek</h2>
+
+      <p>
+        Proyek skripsi ini berfokus pada deteksi penggunaan helm dan
+        rompi keselamatan menggunakan teknologi
+        <i>computer vision</i> dan <i>deep learning</i>.
+      </p>
+
+      <p>
+        Penelitian membandingkan YOLOv8m, YOLOv11m, dan YOLOv26m
+        serta menggunakan K-Means Clustering untuk mengelompokkan
+        kombinasi penggunaan APD.
+      </p>
+
+      <p>
+        Pengujian dilakukan dalam skenario simulasi dengan subjek
+        yang berperan sebagai pekerja. Sistem menampilkan hasil deteksi,
+        mendukung pencatatan absensi, dan menyimpan dokumentasi visual.
+      </p>
+
+      <div class="notice">
+        Metodologi penelitian: Business Understanding →
+        Data Understanding → Data Preparation → Modeling →
+        Evaluation → Deployment.
+      </div>
+    </article>
+
+    <!-- TEKNOLOGI -->
+    <article class="card tech">
+      <h2><span class="ico">⚙</span> Teknologi</h2>
+
+      <div class="tech-list">
+
+        <div class="tech-item">
+          <div class="tech-logo">Py</div>
+          <div>
+            <b>Python</b>
+            <small>Bahasa pemrograman sistem.</small>
+          </div>
+        </div>
+
+        <div class="tech-item">
+          <div class="tech-logo">YOLO</div>
+          <div>
+            <b>YOLOv8m · YOLOv11m · YOLOv26m</b>
+            <small>Model deteksi objek yang dibandingkan.</small>
+          </div>
+        </div>
+
+        <div class="tech-item">
+          <div class="tech-logo">CV</div>
+          <div>
+            <b>OpenCV</b>
+            <small>Pemrosesan citra dan video.</small>
+          </div>
+        </div>
+
+        <div class="tech-item">
+          <div class="tech-logo">K-M</div>
+          <div>
+            <b>K-Means Clustering</b>
+            <small>Pengelompokan pola penggunaan APD.</small>
+          </div>
+        </div>
+
+        <div class="tech-item">
+          <div class="tech-logo">RF</div>
+          <div>
+            <b>Roboflow</b>
+            <small>Pengelolaan dan anotasi dataset.</small>
+          </div>
+        </div>
+
+        <div class="tech-item">
+          <div class="tech-logo">XLS</div>
+          <div>
+            <b>CSV · Excel</b>
+            <small>Pencatatan dan rekap hasil deteksi.</small>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- DATASET -->
+    <article class="card dataset">
+      <h2><span class="ico">▦</span> Dataset</h2>
+
+      <div class="metric-grid">
+        <div class="metric">
+          <span>Total gambar</span>
+          <strong>1.278</strong>
+        </div>
+
+        <div class="metric">
+          <span>Kelas objek</span>
+          <strong>5</strong>
+        </div>
+
+        <div class="metric">
+          <span>Model dibandingkan</span>
+          <strong>3</strong>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Kelas</th>
+            <th>Keterangan</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><span class="tag">person</span></td>
+            <td>Subjek yang berperan sebagai pekerja</td>
+          </tr>
+
+          <tr>
+            <td><span class="tag yellow">helmet</span></td>
+            <td>Helm keselamatan</td>
+          </tr>
+
+          <tr>
+            <td><span class="tag green">vest</span></td>
+            <td>Rompi keselamatan</td>
+          </tr>
+
+          <tr>
+            <td><span class="tag red">no-helmet</span></td>
+            <td>Tidak menggunakan helm</td>
+          </tr>
+
+          <tr>
+            <td><span class="tag">no-vest</span></td>
+            <td>Tidak menggunakan rompi</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <!-- WORKFLOW -->
+    <article class="card workflow">
+      <h2><span class="ico">⇢</span> Alur Kerja Sistem</h2>
+
+      <div class="steps">
+
+        <div class="step">
+          <span class="num">01 / INPUT</span>
+          <b>📷 Pengambilan citra</b>
+          <p>Kamera atau webcam mengambil citra/video dalam skenario simulasi.</p>
+        </div>
+
+        <div class="step">
+          <span class="num">02 / DETECT</span>
+          <b>◎ Deteksi objek</b>
+          <p>Model YOLO mendeteksi objek berdasarkan lima kelas yang dilatih.</p>
+        </div>
+
+        <div class="step">
+          <span class="num">03 / VALIDATE</span>
+          <b>✓ Validasi APD</b>
+          <p>Valid jika helm dan rompi terdeteksi; selain itu Tidak Valid.</p>
+        </div>
+
+        <div class="step">
+          <span class="num">04 / RECORD</span>
+          <b>▤ Pencatatan hasil</b>
+          <p>Hasil digunakan untuk mendukung absensi CSV dan rekap Excel.</p>
+        </div>
+
+        <div class="step">
+          <span class="num">05 / EVIDENCE</span>
+          <b>▧ Dokumentasi</b>
+          <p>Hasil deteksi dengan bounding box dan label kelas disimpan.</p>
+        </div>
+
+        <div class="step">
+          <span class="num">06 / CLUSTER</span>
+          <b>⦿ K-Means</b>
+          <p>Data dikelompokkan berdasarkan kombinasi penggunaan helm dan rompi.</p>
+        </div>
+
+        <div class="step">
+          <span class="num">07 / EVALUATE</span>
+          <b>▥ Evaluasi model</b>
+          <p>Ketiga model dibandingkan dengan metrik evaluasi deteksi objek.</p>
+        </div>
+
+        <div class="step">
+          <span class="num">08 / OUTPUT</span>
+          <b>▣ Hasil sistem</b>
+          <p>Tampilan deteksi, rekap kehadiran, dokumentasi, dan hasil clustering.</p>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- EVALUASI -->
+    <article class="card evaluation">
+      <h2><span class="ico">▥</span> Perbandingan Model</h2>
+
+      <p>Nilai yang dicantumkan pada ringkasan penelitian:</p>
+
+      <div class="barrow">
+        <span>YOLOv8m</span>
+        <div class="bar"><i style="width:84.9%"></i></div>
+        <b>0,849</b>
+      </div>
+
+      <div class="barrow">
+        <span>YOLOv11m</span>
+        <div class="bar"><i style="width:81.8%"></i></div>
+        <b>0,818</b>
+      </div>
+
+      <div class="barrow">
+        <span>YOLOv26m</span>
+        <div class="bar"><i style="width:84.3%"></i></div>
+        <b>0,843</b>
+      </div>
+
+      <div class="notice">
+        Nilai batang menunjukkan mAP@0.5, bukan akurasi klasifikasi.
+        YOLOv26m memiliki F1-Score 0,81 pada confidence threshold 0,398.
+      </div>
+    </article>
+
+    <!-- HASIL PENELITIAN -->
+    <article class="card results">
+      <h2><span class="ico">▤</span> Hasil Penelitian</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>mAP@0.5</th>
+            <th>F1-Score</th>
+            <th>Catatan</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>YOLOv8m</td>
+            <td>0,849</td>
+            <td>0,76</td>
+            <td>Confidence threshold 0,94</td>
+          </tr>
+
+          <tr>
+            <td>YOLOv11m</td>
+            <td>0,818</td>
+            <td>0,76</td>
+            <td>Confidence threshold 0,874</td>
+          </tr>
+
+          <tr>
+            <td><b>YOLOv26m</b></td>
+            <td>0,843</td>
+            <td><b>0,81</b></td>
+            <td>Confidence threshold 0,971</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top:12px">
+        YOLOv26m digunakan sebagai model utama pada ringkasan ini
+        berdasarkan F1-Score tertinggi di antara nilai yang dicantumkan.
+      </p>
+    </article>
+
+    <!-- CLUSTERING -->
+    <article class="card clusters">
+      <h2><span class="ico">⦿</span> Hasil K-Means Clustering</h2>
+
+      <div class="cluster-grid">
+
+        <div class="cluster">
+          <strong>CLUSTER 0</strong>
+          <p>Menggunakan helm tanpa rompi.</p>
+        </div>
+
+        <div class="cluster">
+          <strong>CLUSTER 1</strong>
+          <p>Menggunakan helm dan rompi secara lengkap.</p>
+        </div>
+
+        <div class="cluster">
+          <strong>CLUSTER 2</strong>
+          <p>Menggunakan rompi tanpa helm.</p>
+        </div>
+
+        <div class="cluster">
+          <strong>CLUSTER 3</strong>
+          <p>Tidak menggunakan helm maupun rompi.</p>
+        </div>
+
+      </div>
+    </article>
+
+    <!-- DOKUMENTASI -->
+    <article class="card gallery">
+
+      <h2><span class="ico">▧</span> Dokumentasi Tampilan Running</h2>
+
+      <p>
+        Dokumentasi visual hasil implementasi dan pengujian sistem deteksi APD.
+      </p>
+
+      <div class="gallery-grid">
+
+        <!-- GAMBAR SCREENSHOT -->
+        <div class="shot">
+
+          <h3 class="shot-title">Screenshot Hasil Deteksi</h3>
+
+          <img
+            src="../images/skripsi.png"
+            alt="Hasil deteksi dan status penggunaan APD"
+            loading="lazy"
+          >
+
+          <p class="caption">
+            Hasil deteksi dan status penggunaan APD.
+          </p>
+
+        </div>
+
+        <!-- VIDEO DEMO -->
+        <div class="shot">
+
+          <h3 class="shot-title">Video Demo Sistem APD</h3>
+
+          <div class="video-container">
+
+            <video
+              controls
+              preload="metadata"
+              playsinline
+              poster="../images/skripsi.png"
+            >
+              <source src="../videos/demo.mp4" type="video/mp4">
+
+              Browser Anda tidak mendukung pemutaran video.
+            </video>
+
+          </div>
+
+          <p class="video-caption">
+            Demo sistem deteksi penggunaan helm dan rompi
+            secara real-time.
+          </p>
+
+        </div>
+
+      </div>
+    </article>
+
+    <!-- CATATAN -->
+    <article class="card notes">
+      <h2><span class="ico">ⓘ</span> Catatan Penelitian</h2>
+
+      <p>
+        Pengembangan dan pengujian dilakukan dalam skenario simulasi
+        dengan subjek yang berperan sebagai pekerja.
+      </p>
+
+      <p>
+        Karena itu, hasil penelitian tidak dinyatakan sebagai pengujian
+        langsung di proyek konstruksi aktual.
+      </p>
+
+      <div class="notice">
+        Kerangka kerja penelitian: CRISP-DM<br>
+        Business Understanding · Data Understanding · Data Preparation ·
+        Modeling · Evaluation · Deployment
+      </div>
+    </article>
+
+  </section>
+
+  <footer>
+    Dokumentasi proyek skripsi · Sistem Deteksi Penggunaan APD ·
+    Computer Vision & Deep Learning
+  </footer>
+
+</main>
+
+</body>
+</html>

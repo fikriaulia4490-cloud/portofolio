@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b10">
+  <meta name="description" content="Portofolio Teknik Informatika: pengembangan website dan sistem deteksi APD berbasis computer vision.">
+  <title>Portfolio | Fikri Muhammad Aulia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+  <nav class="container nav" aria-label="Navigasi utama">
+    <a class="logo" href="#home">FIKRI MUHAMMAD AULIA<span>.</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="navLinks">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Beranda</a><a href="#projects">Proyek</a><a href="#skills">Keahlian</a><a href="#about">Tentang</a><a class="nav-contact" href="#contact">Hubungi Saya ↗</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="hero container" id="home">
+    <div class="hero-content reveal">
+      <div class="eyebrow"><span class="status-dot"></span> PORTOFOLIO TEKNIK INFORMATIKA</div>
+      <h1>Membangun ide menjadi <span class="highlight">solusi digital.</span></h1>
+      <p class="hero-description">Saya Fikri Muhammad Aulia, lulusan S1 Teknik Informatika yang tertarik pada pengembangan website, basis data, dan computer vision. Saya senang mempelajari teknologi dan menerapkannya untuk menyelesaikan masalah nyata.</p>
+      <div class="hero-buttons"><a href="#projects" class="btn btn-primary">Lihat Proyek ↘</a><a href="#contact" class="btn btn-secondary">Hubungi Saya</a></div>
+    </div>
+    <aside class="profile-card reveal">
+
+    <div class="profile-top">
+
+        <div class="avatar">
+            <img
+                src="images/fikri.png"
+                alt="Foto Fikri Muhammad Aulia"
+            >
+        </div>
+
+        <div class="profile-info">
+            <h2>Fikri Muhammad Aulia</h2>
+
+            <p>Lulusan S1 Teknik Informatika</p>
+
+            <p class="university">
+                Universitas Krisnadwipayana
+            </p>
+        </div>
+
+    </div>
+
+    <div class="profile-divider"></div>
+
+    <p class="profile-label">Fokus utama</p>
+
+    <div class="profile-facts">
+
+        <div class="fact">
+            <strong>Web</strong>
+            <span>Pengembangan website</span>
+        </div>
+
+        <div class="fact">
+            <strong>CV / AI</strong>
+            <span>Deteksi objek</span>
+        </div>
+
+        <div class="fact">
+            <strong>Data</strong>
+            <span>Basis data</span>
+        </div>
+
+        <div class="fact">
+            <strong>Python</strong>
+            <span>Pengembangan sistem</span>
+        </div>
+
+    </div>
+
+    <div class="profile-tags">
+        <span>Problem Solving</span>
+        <span>Web Development</span>
+        <span>Computer Vision</span>
+    </div>
+
+</aside>
+</section>
+
+  <section class="container section" id="projects">
+    <div class="section-heading reveal"><div><div class="section-label">01 — KARYA PILIHAN</div><h2>Proyek pilihan<span class="lime">.</span></h2></div><p>Beberapa proyek yang menunjukkan pengalaman saya dalam membangun website dan menerapkan computer vision.</p></div>
+    <div class="project-grid">
+      <article class="project-card reveal">
+        <button class="screenshot-button" type="button" data-image="images/IBG.png" data-caption="Website PT Intishar Berkah Globalindo" aria-label="Perbesar screenshot website PT IBG">
+          <img src="images/IBG.png" alt="Screenshot asli website PT Intishar Berkah Globalindo" loading="lazy" onerror="this.closest('.screenshot-button').classList.add('image-missing')">
+          <span class="screenshot-placeholder"><span class="placeholder-icon">WEB</span><strong>Screenshot Website PT IBG</strong><small>Tambahkan gambar asli ke folder images</small></span><span class="screenshot-label">Website Perusahaan ↗</span>
+        </button>
+        <div class="project-body"><div class="project-meta"><span>Praktik Kerja Lapangan</span><span>PROJECT / 01</span></div><h3>Website PT Intishar Berkah Globalindo</h3><p>Website profil perusahaan konstruksi dan renovasi bangunan yang berfungsi sebagai media informasi dan promosi digital untuk memperkenalkan perusahaan serta layanannya.</p>
+          <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">PHP</span><span class="tag">MySQL</span></div>
+          <div class="project-details"><div class="detail-item"><strong>Kontribusi</strong><p>Pengembangan website dan penyesuaian antarmuka sesuai pekerjaan yang dikerjakan selama PKL.</p></div><div class="detail-item"><strong>Fokus</strong><p>Profil perusahaan, informasi layanan, dan promosi digital.</p></div></div>
+          <div class="project-footer"><a class="project-link" href="https://github.com/fikriaulia4480/website-pkl.git" target="_blank" rel="noopener noreferrer">Source Code ↗</a></div>
+        </div>
+      </article>
+      <article class="project-card reveal">
+        <button class="screenshot-button" type="button" data-image="images/skripsi.png" data-caption="Sistem Deteksi Penggunaan APD" aria-label="Perbesar screenshot aplikasi deteksi APD">
+          <img src="images/skripsi.png" alt="Screenshot asli aplikasi sistem deteksi APD" loading="lazy" onerror="this.closest('.screenshot-button').classList.add('image-missing')">
+          <span class="screenshot-placeholder"><span class="placeholder-icon">YOLO</span><strong>Screenshot Aplikasi Deteksi APD</strong><small>Tambahkan gambar asli ke folder images</small></span><span class="screenshot-label">Computer Vision ↗</span>
+        </button>
+        <div class="project-body"><div class="project-meta"><span>Proyek Skripsi</span><span>PROJECT / 02</span></div><h3>Sistem Deteksi Penggunaan APD</h3><p>Sistem untuk mendeteksi helm, rompi keselamatan, dan pekerja menggunakan YOLO. Hasil deteksi dipakai untuk menentukan status kelengkapan APD dan dieksplorasi melalui K-Means Clustering.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">YOLO</span><span class="tag">OpenCV</span><span class="tag">K-Means</span></div>
+          <div class="project-details"><div class="detail-item"><strong>Fitur</strong><p>Deteksi kelas helm, tanpa helm, rompi, tanpa rompi, dan pekerja sesuai label model.</p></div><div class="detail-item"><strong>Arsitektur</strong><p>Input gambar/video → deteksi objek YOLO → aturan status APD → pencatatan atau pengelompokan hasil.</p></div><div class="detail-item"><strong>Evaluasi</strong><p>Metrik evaluasi dicantumkan setelah diverifikasi dari hasil pengujian final.</p></div></div>
+          <div class="project-footer"><a class="project-link" href="projects/dokumentasi_sistem_deteksi_apd.html" target="_blank" rel="noopener">Baca dokumentasi ↗</a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="skills-section section" id="skills"><div class="container"><div class="section-heading reveal"><div><div class="section-label">02 — KEMAMPUAN</div><h2>Teknologi yang digunakan<span class="lime">.</span></h2></div><p>Teknologi yang pernah digunakan dalam proyek dan proses pembelajaran.</p></div>
+    <div class="skills-grid"><article class="skill-card reveal"><div class="skill-icon">&lt;/&gt;</div><h3>Web Development</h3><p>HTML, CSS, PHP, JavaScript, dan antarmuka web.</p></article><article class="skill-card reveal"><div class="skill-icon">DB</div><h3>Database</h3><p>MySQL, perancangan dan pengelolaan basis data.</p></article><article class="skill-card reveal"><div class="skill-icon">CV</div><h3>Computer Vision</h3><p>Python, YOLO, OpenCV, dan deteksi objek.</p></article><article class="skill-card reveal"><div class="skill-icon">ML</div><h3>Machine Learning</h3><p>K-Means Clustering dan evaluasi model deteksi.</p></article></div>
+  </div></section>
+
+  <section class="container section" id="about"><div class="about-grid"><div class="reveal"><div class="section-label">03 — TENTANG SAYA</div><h2 class="about-title">Memahami masalah. Membangun solusi.</h2></div><div class="about-content reveal"><p>Saya merupakan lulusan S1 Teknik Informatika Universitas Krisnadwipayana. Saya memiliki ketertarikan pada pengembangan website, sistem basis data, dan penerapan machine learning.</p><p>Melalui pengembangan website perusahaan saat PKL dan proyek skripsi deteksi APD, saya mendapatkan pengalaman dalam membangun antarmuka aplikasi serta menerapkan teknologi untuk kebutuhan tertentu.</p><ul class="about-list"><li><span>↗</span> Pengembangan website dan antarmuka pengguna</li><li><span>↗</span> Pengelolaan dan perancangan basis data</li><li><span>↗</span> Deteksi objek menggunakan computer vision</li><li><span>↗</span> Pembelajaran teknologi dan pemecahan masalah</li></ul></div></div></section>
+<!-- =========================
+     CONTACT SECTION
+========================= -->
+
+<section class="container section" id="contact">
+    <div class="contact-box reveal">
+
+        <div class="contact-content">
+            <div class="section-label">
+                04 — KONTAK
+            </div>
+
+            <h2>
+                Mari terhubung<span class="lime">.</span>
+            </h2>
+
+            <p>
+                Terbuka untuk diskusi profesional, kolaborasi,
+                proyek pengembangan website, serta peluang kerja
+                di bidang teknologi informasi.
+            </p>
+        </div>
+
+        <div class="contact-actions">
+
+            <a
+                class="btn btn-primary"
+                href="mailto:fikriaulia4450@gmail.com"
+            >
+                <span>Email Saya</span>
+                <span aria-hidden="true">↗</span>
+            </a>
+
+            <a
+                class="btn btn-secondary"
+                href="https://wa.me/628159127733"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span>WhatsApp Saya</span>
+                <span aria-hidden="true">↗</span>
+            </a>
+
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+    <div class="container footer-inner">
+
+        <p>
+            © <span id="year"></span>
+            <strong>Fikri Muhammad Aulia</strong>
+        </p>
+
+        <p>
+            Universitas Krisnadwipayana
+        </p>
+
+    </div>
+</footer>
+
+
+<!-- =========================
+     IMAGE LIGHTBOX
+========================= -->
+
+<div
+    class="lightbox"
+    id="lightbox"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Pratinjau gambar proyek"
+>
+    <button
+        class="lightbox-close"
+        id="lightboxClose"
+        type="button"
+        aria-label="Tutup pratinjau"
+    >
+        ×
+    </button>
+
+    <img
+        id="lightboxImage"
+        src=""
+        alt="Pratinjau screenshot proyek"
+    >
+
+    <p id="lightboxCaption"></p>
+</div>
+
+</body>
+</html>
